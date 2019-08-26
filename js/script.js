@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
+
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 
@@ -16,13 +16,11 @@ FSJS project 2 - List Filter and Pagination
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
-function createElement(elementName, property, value) {
-	const element = document.createElement(elementName);
-	element[property] = value;
-	return element;
-}
+const students = document.getElementsByClassName("student-item cf");
 
-const button1 = createElement("button", "1", "button");
+const numberPages = (Math.floor(students.length/ 10) + 1);
+
+const studentList = document.getElementsByTagName("ul");
 
 /*** 
    Create the `showPage` function to hide all of the items in the 
@@ -38,7 +36,10 @@ const button1 = createElement("button", "1", "button");
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+function showPage (list, page){
 
+
+}
 
 
 
