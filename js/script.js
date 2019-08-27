@@ -1,35 +1,20 @@
-/*** 
-	Add your global variables that store the DOM elements you will 
-	need to reference and/or manipulate. 
-   
-	But be mindful of which variables should be global and which 
-	should be locally scoped to one of the two main functions you're 
-	going to create. A good general rule of thumb is if the variable 
-	will only be used inside of a function, then it can be locally 
-	scoped to that function.
-***/
+// Junior Lam Tiang
+// TechDegree - Project2
+// List Pagination and Filtering
 
+
+//global variables that include the list of students, the amount of pages, and maximum amount of students on each page
 const students = document.getElementsByClassName("student-item cf");
+const pages = Math.floor((students.length / 10) + 1)
 const limit = 10;
 
-/*** 
-	Create the `showPage` function to hide all of the items in the 
-	list except for the ten you want to show.
-
-	Pro Tips: 
-		- Keep in mind that with a list of 54 students, the last page 
-		will only display four.
-		- Remember that the first student has an index of 0.
-		- Remember that a function `parameter` goes in the parens when 
-		you initially define the function, and it acts as a variable 
-		or a placeholder to represent the actual function `argument` 
-		that will be passed into the parens later when you call or 
-		"invoke" the function 
-***/
-function showPage(list,page){
+//function that shows the specified page with specified students according to the limit
+const showPage = (list,page) => {
+	//variables that hold the start and end of index
 	const startIndex = (page * limit) - limit;
 	const endIndex = page * limit;
 
+	//loop that will display only the students that fall in between the indexes and hide the rest
 	for(let i = 0; i < list.length; i += 1){
 		if (i >= startIndex && i < endIndex){
 			list[i].style.display = '';
@@ -39,18 +24,59 @@ function showPage(list,page){
 	}
 }
 
-/*** 
-	Create the `appendPageLinks function` to generate, append, and add 
-	functionality to the pagination buttons.
-***/
-function appendPage(list) {
-	const ul = document.getElementsByTagName('ul');
+//function that will activate upon click to show specified students
+function appendPage(list){
+	//variables that hold the div and ul elements
 	const div = document.createElement('div');
+	const ul = document.createElement('ul');
+
+	//appends the ul element to the div then appends the div to the page
+	document.body.appendChild(div);
 	div.classList.add('pagination');
-	ul.append(div);
-
-
+	div.append(ul);
 	
+	//loop that will create page bar at the bottom and can be interacted with
+	for(let i = 0; i < pages; i += 1){
+		//variables that hold the li and a elements
+		let li = document.createElement('li');
+		let a = document.createElement('a');
+
+		//appends the a element with it's link to the li element that will be appended to the ul element above
+		a.href = '#';
+		a.textContent = i + 1;
+		li.append(a);
+		ul.append(li);
+
+		//conditional that gives the first a element the class active
+		if(a.textContent == 1){
+			a.classList.add('active');
+		}
+
+		//event listener that waits for click on the a elements
+		a.addEventListener ('click', (e) => {
+			//variables that hold the raget and the element with the class active
+			const page = e.target;
+			const active = document.getElementsByTagName('a');
+
+			//when clicked the page will show new specified students
+			showPage(list, a.textContent);
+
+			//loop that looks through all the a elements and finds the class active
+			for(let j = 0; j < pages; j += 1){
+				//conditional that checks if element has class active
+				if(active[j].classList.contains('active')){
+					//if the class is active it will no longer be
+					active[j].classList.remove('active');
+				}
+			}
+			//target that has been clicked will be the new active class
+			page.classList.add('active');
+		});
+	}
 }
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+
+//displays the first page
 showPage(students,1);
+
+//displays the interactive page bar at bottom
+appendPage(students);
